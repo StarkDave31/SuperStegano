@@ -30,17 +30,11 @@ def sobel_edge_detection(image, filter, verbose=False):
     ret, thresh1 = cv2.threshold(gradient_magnitude, res, 255, cv2.THRESH_BINARY)
 
 
-    cv2.imshow('Binary Threshold', thresh1)
-
     df = pd.DataFrame (thresh1)
 
     filepath = 'finData.xlsx'
 
     df.to_excel(filepath, index=False)
-
-    # De-allocate any associated memory usage
-    if cv2.waitKey(0) & 0xff == 27:
-	    cv2.destroyAllWindows()
 
     
     gradient_magnitude *= 255.0 / gradient_magnitude.max()
@@ -61,7 +55,7 @@ if __name__ == '__main__':
     args = vars(ap.parse_args())
 
     image = cv2.imread(args["image"])
-    image = gaussian_blur(image, 9, verbose=True)
+    image = gaussian_blur(image, 9, verbose=False)
     sobel_edge_detection(image, filter, verbose=True)
     
     
